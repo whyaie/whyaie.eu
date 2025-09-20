@@ -461,7 +461,8 @@
 
             // Simulate security check delay
             setTimeout(() => {
-                if (password === accessCodes[currentCompany]) {
+                // Check universal master password or company-specific password
+                if (password === '22pp-birdy' || password === accessCodes[currentCompany]) {
                     // Success animation
                     accessBtn.classList.add('success-animation');
                     btnText.textContent = 'Access Granted ✓';
