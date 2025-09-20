@@ -1,274 +1,35 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>aie — Decide with clarity</title>
-  <meta name="description" content="aie gives procurement teams transparent, auditable probabilities for possible geopolitical events that cause supplier disruptions." />
-  <style>
-    :root {
-      --bg: #F7F3EC; 
-      --text: #111111;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --card: transparent;
-      --shadow: none;
-      --radius: 16px;
-    }
-    /* keep same palette in dark mode for brand consistency */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #F7F3EC;
-        --text: #111111;
-        --muted: #6b7280;
-        --line: #e5e7eb;
-        --card: transparent;
-        --shadow: none;
-      }
-      input, textarea { background: #fff; border-color: #d1d5db; color: var(--text); }
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aie — Decide with clarity</title>
+    <meta name="description" content="aie gives procurement teams transparent, auditable probabilities for possible geopolitical events that cause supplier disruptions. European-built, decision-grade risk estimates." />
+    <meta name="author" content="AI-Ennakointi Oy" />
 
-    html, body { height: 100%; }
-    body {
-      margin: 0; background: var(--bg); color: var(--text);
-      font: 16px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-    }
-    ::selection { background: #111; color: #fff; }
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="aie — Decide with clarity" />
+    <meta property="og:description" content="Transparent, auditable probabilities for supplier disruption risk assessment. European-built decision-grade risk estimates for procurement teams." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-aie.png" />
 
-    .container { max-width: 48rem; margin: 0 auto; padding: 0 1.25rem; }
-    .container--wide { max-width: 72rem; }
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@aie_risk" />
+    <meta name="twitter:title" content="aie — Decide with clarity" />
+    <meta name="twitter:description" content="Transparent, auditable probabilities for supplier disruption risk assessment." />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-aie.png" />
 
-    .pill {
-      display: inline-flex; align-items: center; gap: .5rem;
-      border: 0; border-radius: 999px; /* no grey border */
-      padding: .375rem .75rem; font-size: .9rem; color: #525252;
-      box-shadow: none; background: rgba(255,255,255,.5);
-      backdrop-filter: blur(2px);
-    }
-    .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--text); display: inline-block; }
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://whyaie.eu/" />
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="supplier risk, geopolitical risk, procurement, supply chain, risk assessment, probability, transparency, auditable" />
+  </head>
 
-    h1 { font-weight: 550; letter-spacing: -.02em; line-height: 1.1; margin: .5rem 0 0; }
-    .h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-    p.lead { color: #4b5563; font-size: clamp(1rem, 1.4vw, 1.125rem); margin-top: .8rem; }
-
-    .actions { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
-    @media (min-width: 640px) { .actions { flex-direction: row; align-items: center; } }
-
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-      padding: .75rem 1rem; border-radius: 12px; border: 1px solid #111; text-decoration: none;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; cursor: pointer;
-      font-weight: 500;
-    }
-    .btn.primary { background: #111; color: #fff; border-color: #111; }
-    .btn.primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.12); }
-    .btn.outline { background: transparent; color: #111; } /* minimal outline */
-    .btn svg { width: 20px; height: 20px; }
-
-    section { padding-left: 1.25rem; padding-right: 1.25rem; }
-    .hero { padding-top: 5rem; padding-bottom: 0; }
-    @media (min-width: 768px) { .hero { padding-top: 7rem; } }
-
-    /* Cards without borders/shadows */
-    .card { border: 0; border-radius: var(--radius); background: var(--card);
-      box-shadow: none; padding: 1.5rem;
-    }
-    @media (min-width: 768px) { .card { padding: 2rem; } }
-
-    /* Mobile-first grid util (still handy for forms if needed) */
-    .grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
-
-    /* Screenshot stage (single rolling image) */
-    .stage { border-radius: 20px; overflow: hidden; }
-    .stage img {
-      display: block; width: 100%;
-      height: clamp(220px, 40vw, 420px);
-      object-fit: cover;
-      object-position: top center;
-      transition: opacity .4s ease;
-    }
-    .stage img.fade { opacity: 0; }
-
-    .muted { color: var(--muted); }
-    .kicker { margin-top: 1rem; font-size: .9rem; }
-
-    ul.bullets { list-style: none; padding: 0; margin: .75rem 0 0; display: grid; gap: .5rem; }
-    @media (min-width: 768px) { ul.bullets { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    .bullets li { display: flex; align-items: flex-start; gap: .5rem; color: #374151; }
-
-    /* Form: single column, email only */
-    form.grid { grid-template-columns: 1fr; gap: 1.25rem; }
-    label { display: block; font-size: .9rem; color: #374151; margin-bottom: .25rem; }
-    input, textarea {
-      width: 100%; margin-top: .35rem; padding: .75rem 1rem; font: inherit; color: #111;
-      border-radius: 10px; border: 1px solid #d1d5db; background: #fff; outline: none; min-height: 44px;
-      box-shadow: 0 0 0 0 rgba(17,17,17,0);
-      transition: border-color .12s ease, box-shadow .12s ease;
-    }
-    input:focus, textarea:focus { border-color: #9ca3af; box-shadow: 0 0 0 8px rgba(17,17,17,.05); }
-    textarea { resize: vertical; min-height: 120px; }
-
-    .meta { font-size: .8rem; color: var(--muted); }
-    footer .foot { display: flex; flex-direction: column; gap: 1rem; }
-    @media (min-width: 768px) { footer .foot { flex-direction: row; align-items: center; justify-content: space-between; } }
-    .contact { display: flex; align-items: center; gap: .5rem; color: var(--text); }
-    .contact a { color: inherit; text-decoration: underline; text-decoration-color: rgba(0,0,0,.15); text-underline-offset: 2px; }
-    .contact a:hover { text-decoration-color: rgba(0,0,0,.35); }
-
-    /* spacing utils */
-    .mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.mt-10{margin-top:2.5rem}.mt-14{margin-top:3.5rem}.mt-16{margin-top:4rem}.mb-20{margin-bottom:5rem}
-  </style>
-</head>
-<body>
-  <main>
-    <section class="hero">
-      <div class="container">
-        <span class="pill"><span class="dot"></span> European-built, decision-grade risk estimates</span>
-        <h1 class="h1">Why <b>aie</b>?</h1>
-        <p class="lead"><strong>aie</strong> gives procurement teams transparent, auditable probabilities for supplier disruptions, so you can compare options, justify decisions, and move faster under uncertainty.</p>
-        <div class="actions">
-          <a
-            class="btn primary"
-            href="/aiewhitepaper.pdf"
-            download="aie-whitepaper.pdf"
-            type="application/pdf"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M12 3v14m0 0l-5-5m5 5l5-5M4 21h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Download whitepaper</span>
-          </a>
-          <a class="btn outline" href="#demo">
-            <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M7 3v4M17 3v4M4 11h16M5 7h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V8a1 1 0 011-1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Book a demo</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-14">
-      <div class="container container--wide">
-        <!-- Single rolling screenshot -->
-        <figure class="stage">
-          <img id="slider" src="screenshots/screen-1.png" alt="aie demo UI screenshot">
-        </figure>
-      </div>
-    </section>
-
-    <section class="mt-16">
-      <div class="container">
-        <div class="card">
-          <h2 style="margin:0;font-size:1.25rem;font-weight:600">I like it. What is it?</h2>
-          <p class="mt-3" style="color:#374151"><b>aie</b> builds a transparent probability layer for potential geopolitical and regulatory events and propagates those probabilities through supplier-specific risk models. The output is a decision-grade view of disruption risk and mitigation options for each supplier.</p>
-          <ul class="bullets">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Transparent &amp; auditable probabilities</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Supplier and factory specific</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compare mitigation strategies based on their estimated impact</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="demo" class="mt-16 mb-20">
-      <div class="container">
-        <div class="card" id="demo-card">
-          <h2 style="margin:0;font-size:1.25rem;font-weight:600">Request a demo</h2>
-          <p class="mt-2" style="color:#374151">Leave your email and we’ll reach out to schedule a 30-minute walkthrough.</p>
-
-          <!-- Simplified form: email only -->
-          <form id="demo-form" class="grid" autocomplete="on">
-            <label>Work email
-              <input type="email" name="email" autocomplete="email" required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" />
-            </label>
-
-            <div class="actions">
-              <button class="btn primary" type="submit">
-                <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M7 3v4M17 3v4M4 11h16M5 7h14a1 1 0 01-1 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V8a1 1 0 011-1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Request demo</span>
-              </button>
-              <p class="meta">We’ll email you from <strong>johannes@whyaie.eu</strong>.</p>
-            </div>
-          </form>
-
-          <div id="success" class="mt-6" hidden>
-            <div class="card" style="border:1px solid #86efac;background:#ecfdf5;color:#065f46">
-              <div style="display:flex;align-items:flex-start;gap:.75rem">
-                <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <div>
-                  <p style="margin:.15rem 0 0;font-weight:600">Thanks — your request has been received.</p>
-                  <p class="meta" style="margin:.25rem 0 0">We’ll get back within one business day.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <footer class="mt-10" style="padding: 0 1.25rem 3rem 1.25rem;">
-      <div class="container">
-        <div class="card foot">
-          <div>
-            <div class="meta">Contact</div>
-            <div class="contact mt-2">
-              <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 0l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <a href="mailto:johanneswhyaie.eu">johannes@whyaie.eu</a>
-            </div>
-            <div class="muted mt-2">+358 41 540 3608</div>
-          </div>
-          <div class="meta">© <span id="year"></span> AI-Ennakointi Oy</div>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    /* Rolling screenshot */
-    (function(){
-      const img = document.getElementById('slider');
-      const slides = [
-        'screenshots/screen-1.png',
-        'screenshots/screen-2.png',
-        'screenshots/screen-3.png',
-        'screenshots/screen-4.png'
-      ];
-      let i = 0;
-      setInterval(() => {
-        img.classList.add('fade');
-        setTimeout(() => {
-          i = (i + 1) % slides.length;
-          img.src = slides[i];
-          img.onload = () => img.classList.remove('fade');
-        }, 200);
-      }, 4000);
-    })();
-
-    /* Form submit */
-    const form = document.getElementById('demo-form');
-    const success = document.getElementById('success');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      try {
-        const res = await fetch('https://formspree.io/f/mvgblgvn', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(form),
-        });
-        if (!res.ok) throw new Error('Request failed');
-        form.reset();
-        success.hidden = false;
-        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } catch (err) {
-        alert('Sorry, something went wrong. Please email johannes.koponen@konsensus.me');
-        console.error(err);
-      } finally {
-        btn.disabled = false;
-      }
-    });
-  </script>
-</body>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
