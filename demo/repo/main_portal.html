@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Risk Analysis - Company Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1a202c;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+        
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .company-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+            background: white;
+        }
+        
+        .company-logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .company-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .company-location {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        
+        .view-demo {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .status-live {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-beta {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Supply Chain Risk Analysis</h1>
+        <p class="subtitle">Select a manufacturer to view their supply chain risk dashboard</p>
+        
+        <div class="company-grid">
+            <div class="company-card" onclick="requestAccess('volkswagen')">
+                <div class="company-logo">🚙</div>
+                <div class="company-name">Volkswagen</div>
+                <div class="company-location">Wolfsburg, Germany</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-live">LIVE DATA</span></div>
+            </div>
+            
+            <div class="company-card" onclick="requestAccess('renault')">
+                <div class="company-logo">🚗</div>
+                <div class="company-name">Renault</div>
+                <div class="company-location">Douai, France</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-live">LIVE DATA</span></div>
+            </div>
+            
+            <div class="company-card" onclick="requestAccess('bmw')">
+                <div class="company-logo">🏎️</div>
+                <div class="company-name">BMW</div>
+                <div class="company-location">Munich, Germany</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-beta">DEMO DATA</span></div>
+            </div>
+            
+            <div class="company-card" onclick="requestAccess('mercedes')">
+                <div class="company-logo">🚘</div>
+                <div class="company-name">Mercedes-Benz</div>
+                <div class="company-location">Stuttgart, Germany</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-beta">DEMO DATA</span></div>
+            </div>
+            
+            <div class="company-card" onclick="requestAccess('ford')">
+                <div class="company-logo">🚛</div>
+                <div class="company-name">Ford</div>
+                <div class="company-location">Dearborn, USA</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-beta">DEMO DATA</span></div>
+            </div>
+            
+            <div class="company-card" onclick="requestAccess('toyota')">
+                <div class="company-logo">🚐</div>
+                <div class="company-name">Toyota</div>
+                <div class="company-location">Toyota City, Japan</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-beta">DEMO DATA</span></div>
+            </div>
+            
+            <div class="company-card" onclick="requestAccess('volvo')">
+                <div class="company-logo">🚚</div>
+                <div class="company-name">Volvo</div>
+                <div class="company-location">Ghent, Belgium</div>
+                <span class="view-demo">View Dashboard</span>
+                <div><span class="status-badge status-beta">DEMO DATA</span></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📊 Real-time geopolitical supply chain risk analysis</p>
+            <p style="margin-top: 10px;">
+                Powered by AI-driven risk assessment • 
+                <a href="https://github.com/yourusername/supplyrisk">View on GitHub</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">🔐</div>
+                <h2>Secure Access Required</h2>
+                <p id="companyName"></p>
+            </div>
+            <div class="access-form">
+                <div class="input-group">
+                    <input type="password" id="passwordInput" placeholder="Enter access code..." autocomplete="off">
+                    <button onclick="verifyAccess()" class="access-btn">
+                        <span id="btnText">Access Dashboard</span>
+                        <div id="loadingSpinner" class="spinner" style="display: none;"></div>
+                    </button>
+                </div>
+                <div id="errorMsg" class="error-message"></div>
+                <div class="security-notice">
+                    <small>🛡️ This dashboard contains sensitive supply chain intelligence</small>
+                </div>
+            </div>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            text-align: center;
+            padding: 40px 30px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: lockPulse 2s infinite;
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .modal-header h2 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .access-form {
+            padding: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #passwordInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #passwordInput:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        #passwordInput::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .access-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 160px;
+        }
+
+        .access-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .access-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            display: none;
+        }
+
+        .security-notice {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: white;
+        }
+
+        .success-animation {
+            animation: successPulse 0.6s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); background: rgba(34, 197, 94, 0.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+
+    <script>
+        let currentCompany = '';
+        
+        // Company passwords (in real implementation, this would be server-side)
+        const accessCodes = {
+            'volkswagen': 'VW2024',
+            'renault': 'REN2024', 
+            'bmw': 'BMW2024',
+            'mercedes': 'MB2024',
+            'ford': 'FORD2024',
+            'toyota': 'TOY2024',
+            'volvo': 'VOL2024'
+        };
+
+        function requestAccess(company) {
+            currentCompany = company;
+            document.getElementById('companyName').textContent = company.charAt(0).toUpperCase() + company.slice(1) + ' Supply Chain Dashboard';
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').focus();
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        function closeModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        function verifyAccess() {
+            const password = document.getElementById('passwordInput').value;
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('loadingSpinner');
+            const errorMsg = document.getElementById('errorMsg');
+            const accessBtn = document.querySelector('.access-btn');
+
+            if (!password) {
+                showError('Please enter an access code');
+                return;
+            }
+
+            // Show loading state
+            btnText.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            accessBtn.disabled = true;
+
+            // Simulate security check delay
+            setTimeout(() => {
+                if (password === accessCodes[currentCompany]) {
+                    // Success animation
+                    accessBtn.classList.add('success-animation');
+                    btnText.textContent = 'Access Granted ✓';
+                    btnText.style.display = 'inline';
+                    spinner.style.display = 'none';
+                    
+                    setTimeout(() => {
+                        window.open(`demo_${currentCompany}.html`, '_blank');
+                        closeModal();
+                        resetButton();
+                    }, 800);
+                } else {
+                    showError('Invalid access code. Please try again.');
+                    resetButton();
+                }
+            }, 1200);
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+            document.getElementById('passwordInput').style.borderColor = '#ef4444';
+            
+            setTimeout(() => {
+                document.getElementById('passwordInput').style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            }, 3000);
+        }
+
+        function resetButton() {
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('loadingSpinner');
+            const accessBtn = document.querySelector('.access-btn');
+            
+            btnText.textContent = 'Access Dashboard';
+            btnText.style.display = 'inline';
+            spinner.style.display = 'none';
+            accessBtn.disabled = false;
+            accessBtn.classList.remove('success-animation');
+        }
+
+        // Handle Enter key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && document.getElementById('passwordModal').style.display === 'block') {
+                verifyAccess();
+            }
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
